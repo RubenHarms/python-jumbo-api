@@ -13,7 +13,7 @@ from jumbo_api.objects.profile import Profile
 from jumbo_api.objects.time_slot import TimeSlot
 
 BASE_URL = 'https://mobileapi.jumbo.com/'
-VERSION = 'v15'
+VERSION = 'v17'
 
 AUTHENTICATE_URL = BASE_URL + VERSION + '/users/login'
 PROFILE_URL = BASE_URL + VERSION + '/users/me'
@@ -42,17 +42,17 @@ _LOGGER = logging.getLogger(__name__)
 class JumboApi(object):
     """ Interface class for the Jumbo API """
 
-    def __init__(self, user, password, refresh_rate=REFRESH_RATE):
+    def __init__(self, token, refresh_rate=REFRESH_RATE):
         """ Constructor """
-        self._user = user
-        self._password = password
+        self._user = None
+        self._password = None
         self._profile = None
         self._open_deliveries = {}
         self._open_pick_ups = {}
         self._delivery_time_slots = []
         self._pick_up_time_slots = []
         self._basket = None
-        self._jumbo_token = None
+        self._jumbo_token = token
         self._last_refresh = None
         self._refresh_rate = refresh_rate
 
@@ -180,7 +180,7 @@ class JumboApi(object):
 
     def get_basket(self):
         """ Get your current basket """
-        self._update()
+        self._update()-
         return self._basket
 
     def get_open_delivery_time_slots(self):
